@@ -168,7 +168,7 @@
 .art-timeline, .art-shift, .art-rule, .art-data, .art-labeled,
 .art-triptych, .art-mirror, .art-hands { justify-content: center; align-items: center; }
 
-.hand { width: clamp(84px, 9vw, 150px); height: auto; display: block; overflow: visible; }
+.hand { width: clamp(84px, 9vw, 150px); height: auto; display: block; user-select: none; }
 .hand--md { width: clamp(58px, 6vw, 96px); }
 .hand--sm { width: clamp(44px, 4.4vw, 72px); }
 .hand--xs { width: clamp(30px, 3vw, 50px); }
@@ -211,18 +211,19 @@
 
 /* ---------- portada / cierre ---------- */
 .cover-hands { position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); display: flex; gap: clamp(10px, 2vw, 26px); align-items: flex-end; }
-.cover-token { display: block; background: var(--yellow); border: 3px solid var(--ink); border-radius: 48% 52% 46% 54%; box-shadow: 5px 5px 0 var(--ink); padding: 5px; }
+.cover-token { display: block; }
+.cover-token .hand { width: clamp(62px, 6.6vw, 108px); }
 .cover-token--1 { transform: rotate(-9deg); }
-.cover-token--2 { transform: translateY(-14px) rotate(4deg); background: var(--teal); }
+.cover-token--2 { transform: translateY(-14px) rotate(4deg); }
 .cover-token--3 { transform: rotate(-4deg); }
 .cover-sticker { position: absolute; bottom: 35%; left: 50%; transform: translateX(-50%) rotate(-3deg); font-size: clamp(.72rem, 1.1vw, 1.05rem); }
 
 .art-hands { display: flex; align-items: flex-end; gap: clamp(10px, 2vw, 24px); padding-bottom: 9vh; }
-.close-token { display: block; background: var(--cream); border: 3px solid var(--ink); border-radius: 50% 46% 52% 48%; box-shadow: 5px 5px 0 var(--ink); padding: 5px; }
-.close-token .hand--md { width: clamp(76px, 7.6vw, 120px); }
+.close-token { display: block; }
+.close-token .hand--md { width: clamp(80px, 8vw, 128px); }
 .close-token--1 { transform: rotate(-9deg); }
-.close-token--2 { transform: translateY(-12px) rotate(3deg); background: var(--teal); }
-.close-token--3 { transform: rotate(-4deg); background: var(--orange); }
+.close-token--2 { transform: translateY(-12px) rotate(3deg); }
+.close-token--3 { transform: rotate(-4deg); }
 .close-arrow { font-family: var(--font-display); font-size: clamp(1.4rem, 2.8vw, 2.4rem); }
 .close-phone { display: grid; place-items: center; width: clamp(50px, 5vw, 74px); aspect-ratio: 1; background: var(--ink); color: var(--cream); border-radius: 14px; border: 3px solid var(--ink); box-shadow: 4px 4px 0 rgba(23, 46, 45, .28); }
 .close-phone svg { width: 62%; height: 62%; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; }
@@ -275,10 +276,9 @@
 .sh-code { font-family: var(--font-hand); font-size: clamp(.9rem, 1.15vw, 1.15rem); line-height: 1.4; padding-top: .55rem; }
 .sh-note { display: block; margin-top: .45rem; font-family: var(--font-hand); font-size: clamp(.66rem, .82vw, .82rem); color: var(--muted); }
 .sh-arrow { font-family: var(--font-display); font-size: clamp(1.3rem, 2.2vw, 2.1rem); line-height: 1; }
-.sh-mini { display: flex; gap: .7rem; justify-content: center; padding: .55rem 0 .2rem; }
-.sh-mini > span { position: relative; background: var(--yellow); border: 2px solid var(--ink); border-radius: 14px; padding: 3px; }
-.sh-mini > span:nth-child(2) { background: var(--teal); }
-.sh-mini > span:nth-child(3) { background: var(--orange); }
+.sh-mini { display: flex; gap: .9rem; justify-content: center; padding: .35rem 0 0; }
+.sh-mini > span { position: relative; display: block; }
+.sh-mini .hand { width: clamp(44px, 4.4vw, 76px); }
 .sh-tag {
   position: absolute; top: -8px; right: -8px; width: 20px; height: 20px;
   display: grid; place-items: center; background: var(--ink); color: var(--cream);
@@ -297,13 +297,14 @@
 .rule-line { display: flex; align-items: center; gap: clamp(8px, 1.8vw, 22px); }
 .rule-line b { font-family: var(--font-display); font-size: clamp(.9rem, 1.5vw, 1.5rem); color: var(--orange); letter-spacing: .04em; }
 .rule-code { font-family: var(--font-hand); font-size: clamp(.82rem, 1.05vw, 1.05rem); background: var(--yellow); border: 2px solid var(--ink); padding: .1rem .8rem .06rem; border-radius: 8px; }
-.rule-row { display: flex; gap: .8rem; }
-.rule-chip { background: var(--cream); border: 3px solid var(--ink); border-radius: 50%; box-shadow: 3px 3px 0 var(--ink); padding: 3px; }
-.rule-chip:nth-child(2) { background: var(--teal); }
-.rule-chip:nth-child(3) { background: var(--orange); }
+.rule-row { display: flex; gap: 1rem; align-items: flex-end; }
+.rule-chip { display: block; }
+.rule-chip .hand { width: clamp(38px, 4vw, 64px); }
 
 /* ---------- 6 · puntos ---------- */
-.hand--points { width: clamp(200px, 27vw, 400px); }
+.hand-points { position: relative; display: inline-block; width: clamp(200px, 27vw, 400px); }
+.hand--points { width: 100%; }
+.points-layer { position: absolute; inset: 0; width: 100%; height: 100%; }
 .points-badge {
   position: absolute; background: var(--yellow); color: var(--ink);
   border: 2px solid var(--ink); border-radius: 999px; padding: .28rem .8rem .22rem;

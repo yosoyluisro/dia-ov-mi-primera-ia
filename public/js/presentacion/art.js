@@ -1,55 +1,34 @@
 /* Visuales por slide · lenguaje gráfico de ¡OV! Arcade Edition */
 
-const FINGERS = [
-  { x: 62, w: 17, up: 72 },
-  { x: 83, w: 17, up: 90 },
-  { x: 104, w: 17, up: 82 },
-  { x: 125, w: 17, up: 64 },
-];
+const HANDS = {
+  rock: { src: "/assets/img/hands/piedra.svg", alt: "Piedra" },
+  paper: { src: "/assets/img/hands/papel.svg", alt: "Papel" },
+  scissors: { src: "/assets/img/hands/tijeras.svg", alt: "Tijeras" },
+};
 
 export function handSVG(kind = "paper", cls = "") {
-  const up = kind === "paper" ? [0, 1, 2, 3] : kind === "scissors" ? [0, 1] : [];
-  const fingers = FINGERS.map((f, i) =>
-    up.includes(i)
-      ? `<rect x="${f.x}" y="${122 - f.up}" width="${f.w}" height="${f.up + 16}" rx="8.5"/>`
-      : `<rect x="${f.x}" y="110" width="${f.w}" height="22" rx="7"/>`
-  ).join("");
-  const thumb =
-    kind === "paper"
-      ? `<rect x="34" y="150" width="17" height="55" rx="8.5" transform="rotate(-38 42 178)"/>`
-      : `<rect x="44" y="166" width="72" height="19" rx="9.5" transform="rotate(-8 80 176)"/>`;
-  return `<svg class="hand ${cls}" viewBox="0 0 200 240" aria-hidden="true">
-    <g fill="var(--hand-fill,#fff4d8)" stroke="var(--hand-stroke,#172e2d)" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
-      ${fingers}
-      <rect x="52" y="118" width="92" height="96" rx="28"/>
-      ${thumb}
-      <rect x="76" y="204" width="44" height="28" rx="9"/>
-      <path d="M70 176 q30 14 58 0" fill="none" stroke-width="4"/>
-    </g>
-  </svg>`;
+  const h = HANDS[kind] || HANDS.paper;
+  return `<img class="hand ${cls}" src="${h.src}" alt="${h.alt}" draggable="false">`;
 }
 
 const POINTS = [
-  [100, 216],
-  [50, 150], [45, 163], [41, 176], [40, 188],
-  [70.5, 116], [70.5, 96], [70.5, 76], [70.5, 58],
-  [91.5, 110], [91.5, 88], [91.5, 66], [91.5, 44],
-  [112.5, 114], [112.5, 94], [112.5, 74], [112.5, 54],
-  [133.5, 120], [133.5, 102], [133.5, 84], [133.5, 66],
+  [85, 166],
+  [17, 80], [19, 90], [21, 99], [23, 106],
+  [45, 88], [44, 76], [43, 62], [42, 48],
+  [74, 88], [73, 70], [72, 50], [71, 28],
+  [98, 88], [98, 72], [97, 55], [96, 38],
+  [122, 90], [125, 75], [127, 60], [129, 42],
 ];
 
 function handPointsSVG() {
   const dots = POINTS.map(
     ([x, y]) =>
-      `<circle cx="${x}" cy="${y}" r="3.8" fill="var(--dot,#f3e500)" stroke="var(--hand-stroke,#172e2d)" stroke-width="1.8"/>`
+      `<circle cx="${x}" cy="${y}" r="2.2" fill="#00b8ac" stroke="#172e2d" stroke-width="1.1"/>`
   ).join("");
-  const body = handSVG("paper")
-    .replace(/^<svg[^>]*>/, "")
-    .replace(/<\/svg>$/, "");
-  return `<svg class="hand hand--points" viewBox="0 0 200 240" aria-hidden="true">
-    ${body}
-    ${dots}
-  </svg>`;
+  return `<span class="hand-points">
+    ${handSVG("paper", "hand--points")}
+    <svg class="points-layer" viewBox="0 0 160 180" aria-hidden="true">${dots}</svg>
+  </span>`;
 }
 
 const faceSVG = `<svg class="face" viewBox="0 0 120 120" aria-hidden="true">
