@@ -9,7 +9,7 @@ export const SLIDES = [
   {
     kicker: "PREGUNTA",
     title: "¿QUÉ IA USASTE HOY?",
-    body: "Antes de contestar: no todo lo que parece magia es nuevo.",
+    body: "Piensa en tu día completo, desde que despertaste.",
     note: "1–3 min. Levanta la mano y pide tres o cuatro respuestas. Van a decir ChatGPT, Instagram, TikTok, el mapa.\n\nNo corrijas ninguna. Anótalas en voz alta y devuelve: «todo eso es IA, pero no toda nació la semana pasada».\n\nPregunta que deja abierta la siguiente slide: «¿cuál de esas llevaba más tiempo existiendo sin que la llamáramos IA?».",
   },
   {
