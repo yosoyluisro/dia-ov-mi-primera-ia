@@ -81,6 +81,40 @@ const c1 = [[0, 0], [22, -18], [30, 12], [8, 26], [-16, 20], [-24, -8], [4, -30]
 const c2 = [[0, 0], [26, 16], [42, -6], [18, -20], [-8, -24], [-26, 4], [-6, 30], [30, 30]];
 const c3 = [[0, 0], [20, -22], [34, 4], [10, 24], [-14, 18], [-22, -10], [2, -34], [38, 24]];
 
+function aiChipSVG() {
+  const nodes = [
+    [78, 88, "var(--orange)"],
+    [124, 66, "var(--teal)"],
+    [168, 94, "var(--yellow)"],
+    [98, 128, "var(--yellow)"],
+    [144, 124, "var(--orange)"],
+    [116, 166, "var(--teal)"],
+    [170, 158, "var(--orange)"],
+  ];
+  const links = [[0,1],[1,2],[0,3],[1,4],[2,4],[3,5],[4,5],[4,6],[2,6],[3,4]];
+  const lines = links
+    .map(([a, b]) => `<line x1="${nodes[a][0]}" y1="${nodes[a][1]}" x2="${nodes[b][0]}" y2="${nodes[b][1]}"/>`)
+    .join("");
+  const dots = nodes
+    .map(([x, y, c]) => `<circle cx="${x}" cy="${y}" r="7.5" fill="${c}"/>`)
+    .join("");
+  const pins = [
+    [68, 14, 16, 18], [112, 14, 16, 18], [156, 14, 16, 18],
+    [68, 208, 16, 18], [112, 208, 16, 18], [156, 208, 16, 18],
+    [14, 68, 18, 16], [14, 112, 18, 16], [14, 156, 18, 16],
+    [208, 68, 18, 16], [208, 112, 18, 16], [208, 156, 18, 16],
+  ]
+    .map(([x, y, w, h]) => `<rect x="${x}" y="${y}" width="${w}" height="${h}" rx="5"/>`)
+    .join("");
+  return `<svg viewBox="0 0 240 240" aria-hidden="true">
+    <g fill="var(--yellow)" stroke="var(--ink)" stroke-width="5" stroke-linejoin="round">${pins}</g>
+    <rect x="37" y="37" width="180" height="180" rx="26" fill="var(--ink)"/>
+    <rect x="30" y="30" width="180" height="180" rx="26" fill="var(--cream)" stroke="var(--ink)" stroke-width="6"/>
+    <g stroke="var(--ink)" stroke-width="3.6" stroke-linecap="round">${lines}</g>
+    <g stroke="var(--ink)" stroke-width="2.6">${dots}</g>
+  </svg>`;
+}
+
 function treeHTML() {
   return `<div class="art art-tree">
     <div class="tr-node tr-root">INTELIGENCIA ARTIFICIAL</div>
@@ -104,11 +138,7 @@ function treeHTML() {
 export const ART = {
   cover: () => `<div class="art art-cover">
     ${doodle("star")}${doodle("bolt")}${doodle("crown")}${doodle("asterisk")}${doodle("smile")}
-    <div class="cover-hands">
-      <span class="cover-token cover-token--1">${handSVG("rock", "hand--sm")}</span>
-      <span class="cover-token cover-token--2">${handSVG("paper", "hand--sm")}</span>
-      <span class="cover-token cover-token--3">${handSVG("scissors", "hand--sm")}</span>
-    </div>
+    <div class="ai-chip">${aiChipSVG()}</div>
   </div>`,
 
   apps: () => `<div class="art art-apps">

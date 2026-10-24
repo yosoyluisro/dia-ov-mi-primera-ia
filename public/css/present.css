@@ -210,6 +210,9 @@
 .a-tag--teal { background: var(--teal); color: var(--ink); }
 
 /* ---------- portada / cierre ---------- */
+.ai-chip { position: absolute; bottom: 9%; left: 50%; transform: translateX(-50%) rotate(-3deg); width: clamp(140px, 15vw, 200px); }
+.ai-chip svg { width: 100%; height: auto; display: block; }
+
 .cover-hands { position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); display: flex; gap: clamp(10px, 2vw, 26px); align-items: flex-end; }
 .cover-token { display: block; }
 .cover-token .hand { width: clamp(62px, 6.6vw, 108px); }
