@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#FFF4D8" />
+<title>Mi Primera IA · Taller</title>
+<link rel="stylesheet" href="/css/tokens.css" />
+<link rel="stylesheet" href="/css/app.css" />
+</head>
+<body class="app">
+
+<header class="topbar">
+  <a class="brand" href="/presentacion" aria-label="Ir a la presentación">MI PRIMERA IA</a>
+  <ol class="steps" aria-label="Progreso">
+    <li data-step="1">1</li><li data-step="2">2</li><li data-step="3">3</li><li data-step="4">4</li>
+  </ol>
+  <button id="btn-reset" class="btn btn--ghost btn--sm" type="button">reiniciar</button>
+</header>
+
+<main>
+
+  <!-- 1 · PORTADA -->
+  <section id="s-home" class="screen screen--home">
+    <p class="kicker">DÍA OV · IEST ANÁHUAC</p>
+    <h1 class="hero-title">MI PRIMERA<br><span>IA</span></h1>
+    <p class="note hero-note">Vas a enseñarle a una máquina a reconocer tu mano.<br>Tú pones las etiquetas; ella aprende de ti.</p>
+    <button id="btn-start" class="btn" type="button">EMPEZAR</button>
+    <p class="hint" id="hint-load">Cargando el detector…</p>
+    <p class="hint">Usa una sola mano y buena luz. Nada se sube a internet.</p>
+  </section>
+
+  <!-- 2 · CAPTURA -->
+  <section id="s-capture" class="screen" hidden>
+    <h2 class="screen-title">Captura tus ejemplos</h2>
+    <p class="note">Elige una etiqueta y mantén la seña. La app toma 8 fotos de la posición de tu mano.</p>
+
+    <div class="camera">
+      <video id="video" playsinline muted autoplay></video>
+      <canvas id="overlay"></canvas>
+      <div class="cam-msg" id="cam-msg">Esperando la cámara…</div>
+    </div>
+
+    <div class="labels" id="labels">
+      <button class="label label--orange" data-label="piedra" type="button">
+        <span class="emoji">✊</span><span class="lname">piedra</span><b class="count">0/8</b>
+      </button>
+      <button class="label label--yellow" data-label="papel" type="button">
+        <span class="emoji">✋</span><span class="lname">papel</span><b class="count">0/8</b>
+      </button>
+      <button class="label label--teal" data-label="tijera" type="button">
+        <span class="emoji">✌️</span><span class="lname">tijera</span><b class="count">0/8</b>
+      </button>
+    </div>
+
+    <p class="note" id="cap-hint">Toca una etiqueta para empezar.</p>
+    <div class="row">
+      <button id="btn-train" class="btn" type="button" disabled>ENTRENAR</button>
+    </div>
+  </section>
+
+  <!-- 3 · ENTRENAMIENTO (teatro) -->
+  <section id="s-train" class="screen screen--train" hidden>
+    <h2 class="screen-title">Entrenando…</h2>
+    <div class="train-card">
+      <div class="bar"><div class="bar-fill" id="bar-fill"></div></div>
+      <p class="epoch" id="epoch">Preparando ejemplos…</p>
+      <ul class="log" id="train-log"></ul>
+      <div class="neurons" id="neurons" aria-hidden="true"></div>
+    </div>
+    <button id="btn-play" class="btn btn--orange" type="button" hidden>JUGAR</button>
+  </section>
+
+  <!-- 4 · JUEGO -->
+  <section id="s-play" class="screen" hidden>
+    <div class="scorebar">
+      <span>TÚ <b id="score-you">0</b></span>
+      <span class="round">RONDA <b id="round">1</b></span>
+      <span>IA <b id="score-ai">0</b></span>
+    </div>
+
+    <div class="camera camera--play">
+      <video id="video-play" playsinline muted autoplay></video>
+      <canvas id="overlay-play"></canvas>
+      <div class="cam-msg" id="cam-msg-play" hidden></div>
+      <div class="countdown" id="countdown" hidden></div>
+    </div>
+
+    <div class="verdict" id="verdict">
+      <div class="pick" id="pick-label">—</div>
+      <div class="conf"><div class="conf-fill" id="conf-fill"></div></div>
+      <p class="note" id="play-msg">Muestra tu mano y pulsa JUGAR RONDA.</p>
+    </div>
+
+    <div class="row">
+      <button id="btn-round" class="btn" type="button">JUGAR RONDA</button>
+      <button id="btn-eval" class="btn btn--teal btn--sm" type="button">MEDIR PRECISIÓN</button>
+    </div>
+  </section>
+
+  <!-- 5 · EVALUACIÓN -->
+  <section id="s-eval" class="screen" hidden>
+    <h2 class="screen-title">¿Qué tan confiable es?</h2>
+    <p class="note">Estas 5 fotos por gesto <b>no</b> las usó para aprender. Por eso sirven para medirla.</p>
+
+    <div class="camera">
+      <video id="video-eval" playsinline muted autoplay></video>
+      <canvas id="overlay-eval"></canvas>
+      <div class="cam-msg" id="cam-msg-eval" hidden></div>
+    </div>
+
+    <div class="labels" id="labels-eval">
+      <button class="label label--orange" data-label="piedra" type="button">
+        <span class="emoji">✊</span><span class="lname">piedra</span><b class="count">0/5</b>
+      </button>
+      <button class="label label--yellow" data-label="papel" type="button">
+        <span class="emoji">✋</span><span class="lname">papel</span><b class="count">0/5</b>
+      </button>
+      <button class="label label--teal" data-label="tijera" type="button">
+        <span class="emoji">✌️</span><span class="lname">tijera</span><b class="count">0/5</b>
+      </button>
+    </div>
+
+    <div class="accuracy" id="accuracy" hidden>
+      <span class="acc-num" id="acc-num">0%</span>
+      <span class="acc-lbl" id="acc-lbl">0 de 15</span>
+    </div>
+
+    <div class="row">
+      <button id="btn-eval-back" class="btn btn--ghost" type="button">volver al juego</button>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">Día OV · IEST Anáhuac · sin internet, sin cuentas, sin nubes</footer>
+
+<script type="module" src="/js/taller/main.js"></script>
+</body>
+</html>

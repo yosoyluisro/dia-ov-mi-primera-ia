@@ -1,0 +1,5 @@
+﻿*.wasm binary
+*.woff2 binary
+*.woff binary
+*.task binary
+*.png binary
