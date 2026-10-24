@@ -1,4 +1,5 @@
 import { SLIDES } from "./slides.js";
+import { ART } from "./art.js";
 
 const stage = document.getElementById("stage");
 const notes = document.getElementById("notes");
@@ -7,7 +8,9 @@ const cur = document.getElementById("cur");
 
 document.getElementById("total").textContent = SLIDES.length;
 
-let idx = Number(sessionStorage.getItem("mpi.slide") || 0);
+const qs = new URLSearchParams(location.search);
+const fromURL = qs.has("s") ? Number(qs.get("s")) - 1 : NaN;
+let idx = Number.isFinite(fromURL) ? fromURL : Number(sessionStorage.getItem("mpi.slide") || 0);
 if (!Number.isFinite(idx)) idx = 0;
 idx = Math.max(0, Math.min(idx, SLIDES.length - 1));
 
@@ -21,39 +24,37 @@ function el(tag, cls, html) {
 }
 
 function build(slide, i) {
-  const sec = el("section", "slide");
+  const sec = el("section", `slide slide--${slide.layout || "split"} tone--${slide.tone || "cream"}`);
   sec.dataset.i = i;
 
   sec.appendChild(el("p", "slide-kicker", slide.kicker));
 
-  const mid = el("div", "slide-mid");
-  mid.appendChild(el("h1", "slide-title", slide.title));
-  mid.appendChild(el("p", "slide-body", slide.body));
-  sec.appendChild(mid);
+  const grid = el("div", "slide-grid");
+  const copy = el("div", "slide-copy");
+  copy.appendChild(el("h1", "slide-title", slide.title));
+  copy.appendChild(el("p", "slide-body", slide.body));
+  grid.appendChild(copy);
+
+  const artHTML = slide.art && ART[slide.art] ? ART[slide.art]() : "";
+  grid.appendChild(el("div", "slide-art", artHTML));
+  sec.appendChild(grid);
 
   const foot = el("div", "slide-foot");
-  if (slide.demo) {
-    const a = el("a", "btn slide-demo", slide.demoLabel || "PROBARLO");
-    a.href = "/taller";
-    a.addEventListener("click", () => sessionStorage.setItem("mpi.slide", String(i)));
-    foot.appendChild(a);
-  } else {
-    foot.appendChild(el("span"));
-  }
-
   if (slide.qr) {
     const box = el("div", "qrbox");
     const img = el("img");
     img.src = "/assets/img/qr.png";
     img.alt = "Código QR al taller";
-    img.width = 150;
-    img.height = 150;
+    img.width = 128;
+    img.height = 128;
     box.appendChild(img);
     box.appendChild(
       el("div", "qrtext", `<b>Entra al taller</b><span>${tallerURL.replace("https://", "")}</span>`)
     );
+    foot.appendChild(el("span"));
     foot.appendChild(box);
   } else {
+    foot.appendChild(el("span"));
     foot.appendChild(el("span"));
   }
 
